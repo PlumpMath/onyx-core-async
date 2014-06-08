@@ -15,7 +15,8 @@
     :onyx/type :input
     :onyx/medium :core.async
     :onyx/consumption :concurrent
-    :onyx/batch-size batch-size}
+    :onyx/batch-size batch-size
+    :onyx/doc "Reads segments from a core.async channel"}
 
    {:onyx/name :increment
     :onyx/fn :onyx.plugin.core-async-test/increment
@@ -28,7 +29,8 @@
     :onyx/type :output
     :onyx/medium :core.async
     :onyx/consumption :concurrent
-    :onyx/batch-size batch-size}])
+    :onyx/batch-size batch-size
+    :onyx/doc "Writes segments to a core.async channel"}])
 
 (defn increment [segment]
   (assoc segment :n (inc (:n segment))))
