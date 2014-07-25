@@ -46,12 +46,6 @@ In your peer boot-up namespace:
 
 This plugin does not use any attributes.
 
-#### Examples
-
-##### Reading from core.async
-
-##### Writing to core.async
-
 #### Contributing
 
 Pull requests into the master branch are welcomed.
