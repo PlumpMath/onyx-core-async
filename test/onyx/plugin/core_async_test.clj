@@ -49,19 +49,24 @@
 
 (def hornetq-host "127.0.0.1")
 
-(def hornetq-port 5445)
+(def hornetq-port 5465)
 
-(def coord-opts {:datomic-uri (str "datomic:mem://" id)
-                 :hornetq-host hornetq-host
-                 :hornetq-port hornetq-port
-                 :zk-addr "127.0.0.1:2181"
-                 :onyx-id id
-                 :revoke-delay 5000})
+(def coord-opts
+  {:hornetq/mode :vm
+   :hornetq/server? true
+   :hornetq.server/type :vm
+   :zookeeper/address "127.0.0.1:2185"
+   :zookeeper/server? true
+   :zookeeper.server/port 2185
+   :onyx/id id
+   :onyx.coordinator/revoke-delay 5000})
 
-(def peer-opts {:hornetq-host hornetq-host
-                :hornetq-port hornetq-port
-                :zk-addr "127.0.0.1:2181"
-                :onyx-id id})
+(def peer-opts
+  {:hornetq/mode :vm
+   :zookeeper/address "127.0.0.1:2185"
+   :onyx/id id})
+
+(def conn (onyx.api/connect :memory coord-opts))
 
 (def n-segments 100)
 
@@ -72,22 +77,18 @@
 
 (close! in-chan)
 
-(def conn (onyx.api/connect (str "onyx:memory//localhost/" id) coord-opts))
-
 (def v-peers (onyx.api/start-peers conn 1 peer-opts))
 
 (onyx.api/submit-job conn {:catalog catalog :workflow workflow})
 
 (def results (doall (map (fn [x] (<!! out-chan)) (range n-segments))))
 
-(doseq [v-peer v-peers]
-  (try
-    ((:shutdown-fn v-peer))
-    (catch Exception e (prn e))))
-
-(onyx.api/shutdown conn)
-
 (fact results => (map (fn [x] {:n (inc x)}) (range n-segments)))
 
 (fact (<!! out-chan) => :done)
+
+(doseq [v-peer v-peers]
+  ((:shutdown-fn v-peer)))
+
+(onyx.api/shutdown conn)
 

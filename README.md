@@ -1,14 +1,63 @@
-# onyx-core-async-example
+## onyx-core-async
 
-A Clojure library designed to ... well, that part is up to you.
+Onyx plugin providing read and write facilities for Clojure core.async. This plugin should only be used with in-memory mode for tests and is not suitable for a production environment.
 
-## Usage
+#### Installation
 
-FIXME
+In your project file:
 
-## License
+```clojure
+[com.mdrogalis/onyx-core-async "0.3.0"]
+```
 
-Copyright © 2014 FIXME
+In your peer boot-up namespace:
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+```clojure
+(:require [onyx.plugin.core-async])
+```
+
+#### Catalog entries
+
+##### read-from-chan
+
+```clojure
+{:onyx/name :input
+ :onyx/ident :core.async/read-from-chan
+ :onyx/type :input
+ :onyx/medium :core.async
+ :onyx/consumption :concurrent
+ :onyx/batch-size batch-size
+ :onyx/doc "Reads segments from a core.async channel"}
+```
+
+##### write-to-chan
+
+```clojure
+{:onyx/name :output
+ :onyx/ident :core.async/write-to-chan
+ :onyx/type :output
+ :onyx/medium :core.async
+ :onyx/consumption :concurrent
+ :onyx/batch-size batch-size
+ :onyx/doc "Writes segments to a core.async channel"}
+```
+
+#### Attributes
+
+This plugin does not use any attributes.
+
+#### Examples
+
+##### Reading from core.async
+
+##### Writing to core.async
+
+#### Contributing
+
+Pull requests into the master branch are welcomed.
+
+#### License
+
+Copyright © 2014 Michael Drogalis
+
+Distributed under the Eclipse Public License, the same as Clojure.
