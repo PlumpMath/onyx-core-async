@@ -47,10 +47,6 @@
 
 (def id (java.util.UUID/randomUUID))
 
-(def hornetq-host "127.0.0.1")
-
-(def hornetq-port 5465)
-
 (def coord-opts
   {:hornetq/mode :vm
    :hornetq/server? true
