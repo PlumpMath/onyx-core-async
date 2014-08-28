@@ -46,6 +46,24 @@ In your peer boot-up namespace:
 
 This plugin does not use any attributes.
 
+#### Lifecycle Arguments
+
+References to core.async channels must be injected for both the input and output tasks.
+
+##### `read-from-chan`
+
+```clojure
+(defmethod l-ext/inject-lifecycle-resources :my.input.task.identity
+  [_ _] {:core-async/in-chan (chan capacity})
+```
+
+##### `write-to-chan`
+
+```clojure
+(defmethod l-ext/inject-lifecycle-resources :my.output.task.identity
+  [_ _] {:core-async/out-chan (chan capacity)})
+```
+
 #### Contributing
 
 Pull requests into the master branch are welcomed.
