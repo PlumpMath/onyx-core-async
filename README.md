@@ -1,6 +1,6 @@
 ## onyx-core-async
 
-Onyx plugin providing read and write facilities for Clojure core.async. This plugin should only be used with in-memory mode for tests and is not suitable for a production environment.
+Onyx plugin providing read and write facilities for Clojure core.async.
 
 #### Installation
 
