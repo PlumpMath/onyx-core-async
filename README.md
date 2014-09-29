@@ -69,8 +69,8 @@ References to core.async channels must be injected for both the input and output
 ##### `take-segments!`
 
 This additional function is provided as a utility for removing segments
-from a channel until the sentinel value (:done) is found. After :done
-is encountered, all prior segments, including :done, are returned in a seq.
+from a channel until `:done` is found. After `:done` is encountered, all prior segments,
+including `:done`, are returned in a seq.
 
 #### Contributing
 
