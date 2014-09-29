@@ -64,6 +64,14 @@ References to core.async channels must be injected for both the input and output
   [_ _] {:core-async/out-chan (chan capacity)})
 ```
 
+#### Functions
+
+##### `take-segments!`
+
+This additional function is provided as a utility for removing segments
+from a channel until the sentinel value (:done) is found. After :done
+is encountered, all prior segments, including :done, are returned in a seq.
+
 #### Contributing
 
 Pull requests into the master branch are welcomed.

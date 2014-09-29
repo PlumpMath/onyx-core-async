@@ -39,3 +39,14 @@
   (>!! out-chan :done)
   {})
 
+(defn take-segments!
+  "Takes segments off the channel until :done is found.
+   Returns a seq of segments, including :done."
+  [ch]
+  (loop [x []]
+    (let [segment (<!! ch)]
+      (let [stack (conj x segment)]
+        (if-not (= segment :done)
+          (recur stack)
+          stack)))))
+
