@@ -7,7 +7,7 @@ Onyx plugin providing read and write facilities for Clojure core.async.
 In your project file:
 
 ```clojure
-[com.mdrogalis/onyx-core-async "0.3.2.1"]
+[com.mdrogalis/onyx-core-async "0.3.3"]
 ```
 
 In your peer boot-up namespace:
@@ -81,3 +81,4 @@ Pull requests into the master branch are welcomed.
 Copyright © 2014 Michael Drogalis
 
 Distributed under the Eclipse Public License, the same as Clojure.
+

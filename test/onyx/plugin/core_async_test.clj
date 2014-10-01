@@ -73,15 +73,15 @@
 
 (close! in-chan)
 
-(def v-peers (onyx.api/start-peers conn 1 peer-opts))
+(def v-peers (onyx.api/start-peers conn 10 peer-opts))
 
 (onyx.api/submit-job conn {:catalog catalog :workflow workflow})
 
-(def results (doall (map (fn [x] (<!! out-chan)) (range n-segments))))
+(def results (doall (map (fn [_] (<!! out-chan)) (range (inc n-segments)))))
 
-(fact results => (map (fn [x] {:n (inc x)}) (range n-segments)))
-
-(fact (<!! out-chan) => :done)
+(let [expected (set (map (fn [x] {:n (inc x)}) (range n-segments)))]
+  (fact (set (butlast results)) => expected)
+  (fact (last results) => :done))
 
 (doseq [v-peer v-peers]
   ((:shutdown-fn v-peer)))
