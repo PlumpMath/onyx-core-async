@@ -1,4 +1,4 @@
-(defproject com.mdrogalis/onyx-core-async "0.3.3"
+(defproject com.mdrogalis/onyx-core-async "0.3.4-SNAPSHOT"
   :description "Onyx plugin for core.async"
   :url "https://github.com/MichaelDrogalis/onyx-core-async"
   :license {:name "Eclipse Public License"
