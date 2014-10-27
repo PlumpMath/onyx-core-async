@@ -20,7 +20,7 @@
 
    {:onyx/name :increment
     :onyx/fn :onyx.plugin.core-async-test/increment
-    :onyx/type :transformer
+    :onyx/type :function
     :onyx/consumption :concurrent
     :onyx/batch-size batch-size}
 
