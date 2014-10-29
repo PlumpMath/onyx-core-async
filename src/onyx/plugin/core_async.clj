@@ -1,14 +1,15 @@
 (ns onyx.plugin.core-async
-  (:require [clojure.core.async :refer [>!! <!!]]
+  (:require [clojure.core.async :refer [>!! <!! alts!! timeout]]
             [onyx.peer.pipeline-extensions :as p-ext]))
 
 (defmethod p-ext/read-batch [:input :core.async]
   [{:keys [onyx.core/task-map core-async/in-chan]}]
   (let [batch-size (:onyx/batch-size task-map)
+        ms (or (:onyx/batch-timeout task-map) 1000)
         batch (->> (range batch-size)
                    (map (fn [_] {:input :core.async
-                                :message (<!! in-chan)}))
-                   (filter identity))]
+                                :message (first (alts!! [in-chan (timeout ms)]))}))
+                   (filter (comp not nil? :message)))]
     {:onyx.core/batch (doall batch)}))
 
 (defmethod p-ext/decompress-batch [:input :core.async]
