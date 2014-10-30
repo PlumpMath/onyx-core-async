@@ -16,13 +16,15 @@
     :onyx/medium :core.async
     :onyx/consumption :sequential
     :onyx/batch-size batch-size
+    :onyx/batch-timeout 200
     :onyx/doc "Reads segments from a core.async channel"}
 
    {:onyx/name :increment
     :onyx/fn :onyx.plugin.core-async-test/increment
-    :onyx/type :transformer
+    :onyx/type :function
     :onyx/consumption :concurrent
-    :onyx/batch-size batch-size}
+    :onyx/batch-size batch-size
+    :onyx/batch-timeout 200}
 
    {:onyx/name :output
     :onyx/ident :core.async/write-to-chan
@@ -30,6 +32,7 @@
     :onyx/medium :core.async
     :onyx/consumption :sequential
     :onyx/batch-size batch-size
+    :onyx/batch-timeout 200
     :onyx/doc "Writes segments to a core.async channel"}])
 
 (defn increment [segment]
