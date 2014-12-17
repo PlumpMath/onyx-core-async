@@ -7,7 +7,7 @@ Onyx plugin providing read and write facilities for Clojure core.async.
 In your project file:
 
 ```clojure
-[com.mdrogalis/onyx-core-async "0.4.1"]
+[com.mdrogalis/onyx-core-async "0.5.0-SNAPSHOT"]
 ```
 
 In your peer boot-up namespace:
@@ -21,7 +21,7 @@ In your peer boot-up namespace:
 ##### read-from-chan
 
 ```clojure
-{:onyx/name :input
+{:onyx/name :in
  :onyx/ident :core.async/read-from-chan
  :onyx/type :input
  :onyx/medium :core.async
@@ -33,7 +33,7 @@ In your peer boot-up namespace:
 ##### write-to-chan
 
 ```clojure
-{:onyx/name :output
+{:onyx/name :out
  :onyx/ident :core.async/write-to-chan
  :onyx/type :output
  :onyx/medium :core.async
@@ -53,14 +53,14 @@ References to core.async channels must be injected for both the input and output
 ##### `read-from-chan`
 
 ```clojure
-(defmethod l-ext/inject-lifecycle-resources :my.input.task.identity
+(defmethod l-ext/inject-lifecycle-resources :my.input.task.identity-or-name
   [_ _] {:core-async/in-chan (chan capacity})
 ```
 
 ##### `write-to-chan`
 
 ```clojure
-(defmethod l-ext/inject-lifecycle-resources :my.output.task.identity
+(defmethod l-ext/inject-lifecycle-resources :my.output.task.identity-or-name
   [_ _] {:core-async/out-chan (chan capacity)})
 ```
 
