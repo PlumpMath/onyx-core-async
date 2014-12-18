@@ -41,9 +41,10 @@
     :onyx/ident :core.async/read-from-chan
     :onyx/type :input
     :onyx/medium :core.async
-    :onyx/consumption :sequential
+    :onyx/consumption :concurrent
     :onyx/batch-size batch-size
     :onyx/batch-timeout 200
+    :onyx/max-peers 1
     :onyx/doc "Reads segments from a core.async channel"}
 
    {:onyx/name :increment
@@ -57,9 +58,10 @@
     :onyx/ident :core.async/write-to-chan
     :onyx/type :output
     :onyx/medium :core.async
-    :onyx/consumption :sequential
+    :onyx/consumption :concurrent
     :onyx/batch-size batch-size
     :onyx/batch-timeout 200
+    :onyx/max-peers 1
     :onyx/doc "Writes segments to a core.async channel"}])
 
 (defn increment [segment]
