@@ -7,7 +7,7 @@ Onyx plugin providing read and write facilities for Clojure core.async.
 In your project file:
 
 ```clojure
-[com.mdrogalis/onyx-core-async "0.5.0-SNAPSHOT"]
+[com.mdrogalis/onyx-core-async "0.5.0"]
 ```
 
 In your peer boot-up namespace:
