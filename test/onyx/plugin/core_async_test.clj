@@ -1,13 +1,13 @@
 (ns onyx.plugin.core-async-test
   (:require [clojure.core.async :refer [>!! <!! chan close!]]
-            [com.stuartsierra.component :as component]
             [onyx.peer.task-lifecycle-extensions :as l-ext]
             [onyx.plugin.core-async]
             [midje.sweet :refer :all]
-            [onyx.system :refer [onyx-development-env]]
             [onyx.api]))
 
 (def id (java.util.UUID/randomUUID))
+
+(def scheduler :onyx.job-scheduler/round-robin)
 
 (def env-config
   {:hornetq/mode :vm
@@ -16,7 +16,8 @@
    :zookeeper/address "127.0.0.1:2185"
    :zookeeper/server? true
    :zookeeper.server/port 2185
-   :onyx/id id})
+   :onyx/id id
+   :onyx.peer/job-scheduler scheduler})
 
 (def peer-config
   {:hornetq/mode :vm
@@ -24,11 +25,9 @@
    :onyx/id id
    :onyx.peer/inbox-capacity 100
    :onyx.peer/outbox-capacity 100
-   :onyx.peer/job-scheduler :onyx.job-scheduler/round-robin})
+   :onyx.peer/job-scheduler scheduler})
 
-(def dev (onyx-development-env env-config))
-
-(def env (component/start dev))
+(def env (onyx.api/start-env env-config))
 
 (def batch-size 25)
 
@@ -100,7 +99,7 @@
   (fact (last results) => :done))
 
 (doseq [v-peer v-peers]
-  ((:shutdown-fn v-peer)))
+  (onyx.api/shutdown-peer v-peer))
 
-(component/stop env)
+(onyx.api/shutdown-env env)
 
